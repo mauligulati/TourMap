@@ -17,34 +17,16 @@ struct LocationsView: View {
         @Bindable var bindablelocationsViewModel = locationsViewModel
         
         ZStack {
-            Map(position: $bindablelocationsViewModel.cameraPosition) {
-                // Optional: pins
-            }
-            .ignoresSafeArea()
+            mapLayer
+                .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 header
                     .padding()
-                
-                Spacer()
-                
-                ZStack {
-                    ForEach(locationsViewModel.locations) { location in
-                        if locationsViewModel.currentMapLocation == location {
-                            LocationPreviewView(location: location)
-                                .shadow(color: Color.black.opacity(0.3), radius: 20)
-                                .padding()
-                                .transition(
-                                    .asymmetric(
-                                        insertion: .move(edge: .trailing),
-                                        removal: .move(edge: .leading)
-                                    )
-                                )
-                        }                        
-                    }
-                }
+                Spacer()                
+                previewLayer
             }
-        }        
+        }
     }
 }
 
@@ -76,7 +58,42 @@ extension LocationsView {
         .background(.thickMaterial)
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
-        .animation(.easeInOut, value: locationsViewModel.showLocationsList)        
+        .animation(.easeInOut, value: locationsViewModel.showLocationsList)
+    }
+    
+    private var mapLayer: some View {
+        @Bindable var bindablelocationsViewModel = locationsViewModel
+        
+        return Map(position: $bindablelocationsViewModel.cameraPosition) {
+            ForEach(locationsViewModel.locations) { location in
+                Annotation(location.name, coordinate: location.coordinates) {
+                    LocationMapAnnotationView()
+                        .scaleEffect(bindablelocationsViewModel.currentMapLocation == location ? 1 : 0.7)
+                        .onTapGesture {
+                            bindablelocationsViewModel.currentMapLocation = location
+                        }
+                }
+            }
+        }
+        .ignoresSafeArea()
+    }
+    
+    private var previewLayer: some View {
+        ZStack {
+            ForEach(locationsViewModel.locations) { location in
+                if locationsViewModel.currentMapLocation == location {
+                    LocationPreviewView(location: location)
+                        .shadow(color: Color.black.opacity(0.3), radius: 20)
+                        .padding()
+                        .transition(
+                            .asymmetric(
+                                insertion: .move(edge: .trailing),
+                                removal: .move(edge: .leading)
+                            )
+                        )
+                }
+            }
+        }
     }
 }
 
