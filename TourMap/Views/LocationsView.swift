@@ -27,6 +27,9 @@ struct LocationsView: View {
                 previewLayer
             }
         }
+        .sheet(item: $bindablelocationsViewModel.sheetLocation, onDismiss: nil) { location in
+            LocationDetailView(location: location)
+        }
     }
 }
 
@@ -75,7 +78,6 @@ extension LocationsView {
                 }
             }
         }
-        .ignoresSafeArea()
     }
     
     private var previewLayer: some View {

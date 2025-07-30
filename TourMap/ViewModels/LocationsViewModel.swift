@@ -14,8 +14,9 @@ class LocationsViewModel {
     
     var locations: [Location]
     var cameraPosition: MapCameraPosition
-    let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+    let mapSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     var showLocationsList: Bool = false
+    var sheetLocation: Location? = nil
 
     var currentMapLocation: Location {
         didSet {
