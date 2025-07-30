@@ -9,13 +9,13 @@ import SwiftUI
 
 @main
 struct TourMapApp: App {
-    
-    @State private var locationsViewModel = LocationsViewModel()
+
+    @State private var viewModel = LocationsViewModel()
 
     var body: some Scene {
         WindowGroup {
             LocationsView()
-                .environment(locationsViewModel)
-        }        
+                .environment(viewModel)
+        }
     }
 }
