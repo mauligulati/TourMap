@@ -27,6 +27,25 @@ struct LocationsView: View {
                     .padding()
                 
                 Spacer()
+                
+                ZStack {
+                    ForEach(locationsViewModel.locations) { location in
+                        if locationsViewModel.currentMapLocation == location {
+                            LocationPreviewView(location: location)
+                                .shadow(color: Color.black.opacity(0.3), radius: 20)
+                                .padding()
+                                .transition(
+                                    .asymmetric(
+                                        insertion: .move(edge: .trailing),
+                                        removal: .move(edge: .leading)
+                                    )
+                                )
+                        }
+                        
+                    }
+                }
+                
+                
             }
         }        
     }
