@@ -55,7 +55,6 @@ extension LocationsView {
             
             if locationsViewModel.showLocationsList {
                 LocationsListView()
-                    .transition(.move(edge: .top).combined(with: .opacity))
             }
         }
         .background(.thickMaterial)
