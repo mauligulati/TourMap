@@ -40,12 +40,9 @@ struct LocationsView: View {
                                         removal: .move(edge: .leading)
                                     )
                                 )
-                        }
-                        
+                        }                        
                     }
                 }
-                
-                
             }
         }        
     }
